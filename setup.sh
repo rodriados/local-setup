@@ -41,10 +41,11 @@ if [ -z "$PROFILE" ] && [ -t 0 ]; then
 fi
 
 PROFILE="${PROFILE:-minimal}"
+PROFILE_PLAYBOOK_FILE="playbooks/$PROFILE.yml"
 PROFILE_OVERRIDES_TEMPLATE="playbooks/vars/overrides-$PROFILE.yml.tpl"
-PROFILE_OVERRIDES_FILE="playbooks/overrides.yml"
+PROFILE_OVERRIDES_FILE="playbooks/overrides-$PROFILE.yml"
 
-if [ ! -f "$PROFILE_OVERRIDES_TEMPLATE" ]; then
+if [ ! -f "$PROFILE_PLAYBOOK_FILE" ]; then
   die "Unknown profile: $PROFILE"
 fi
 
@@ -79,4 +80,5 @@ fi
 # Start installation process for the selected profile.
 # We use ansible to guide the installation process, but we must first verify whether
 # it is itself installed and do so if needed.
-ansible-playbook playbooks/main.yml -f 1 -t $PROFILE
+ansible-galaxy install -r requirements.yml -p playbooks/roles
+ansible-playbook $PROFILE_PLAYBOOK_FILE -f 1

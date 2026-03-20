@@ -1,0 +1,20 @@
+---
+# Personal workspace setup automation.
+# @file The playbook to perform system installation in a Docker container.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+- name: Workstation Setup
+  hosts: local
+
+  vars_files:
+    - vars/main.yml
+    - overrides-docker.yml
+
+  vars:
+    ansible_user_home: "{{ lookup('env', 'HOME') }}"
+
+  tasks:
+    - name: Include Docker Role
+      ansible.builtin.include_role:
+        name: rodriados.docker
+      tags: always
