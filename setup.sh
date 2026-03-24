@@ -41,26 +41,31 @@ if [ -z "$PROFILE" ] && [ -t 0 ]; then
 fi
 
 PROFILE="${PROFILE:-minimal}"
-PROFILE_PLAYBOOK_FILE="playbooks/$PROFILE.yml"
-PROFILE_OVERRIDES_TEMPLATE="playbooks/vars/overrides-$PROFILE.yml.tpl"
-PROFILE_OVERRIDES_FILE="playbooks/overrides-$PROFILE.yml"
+PROFILE_PLAYBOOK_FILE="$PROFILE.yml"
+PROFILE_OVERRIDES_TEMPLATE="vars/overrides-$PROFILE.yml.tpl"
+PROFILE_OVERRIDES_FILE="overrides-$PROFILE.yml"
 
 if [ ! -f "$PROFILE_PLAYBOOK_FILE" ]; then
   die "Unknown profile: $PROFILE"
 fi
 
-if [ ! -f "$PROFILE_OVERRIDES_FILE" ]; then
+if [ -n "${OVERRIDE+x}" ] || [ ! -f "$PROFILE_OVERRIDES_FILE" ]; then
   # Copy the override variables file according to selected profile.
   # This file contains some variables that may be overridden according to the profile
   # that the user wants to install. This is also a file that can be edited to tweak,
   # enable or disable specific modules, programs or routines during setup.
   cp "$PROFILE_OVERRIDES_TEMPLATE" "$PROFILE_OVERRIDES_FILE"
 
-  # Open the variable override file in editor.
-  # Allow the user to have a chance to edit and configure the setup before starting
-  # the installation of anything that might change the system.
   if [ -t 0 ]; then
+    # Open the variable override file in editor.
+    # Allow the user to have a chance to edit and configure the setup before starting
+    # the installation of anything that might change the system.
     ${VISUAL:-${EDITOR:-vi}} "$PROFILE_OVERRIDES_FILE"
+
+  else
+    # When installing on an environment where the user cannot directly edit the file,
+    # then we must exit to give them a chance to edit the settings manually.
+    die "You must copy and edit the corresponding profile template variables file."
   fi
 fi
 
@@ -80,5 +85,5 @@ fi
 # Start installation process for the selected profile.
 # We use ansible to guide the installation process, but we must first verify whether
 # it is itself installed and do so if needed.
-ansible-galaxy install -r requirements.yml -p playbooks/roles
+ansible-galaxy install -p roles -r requirements.yml
 ansible-playbook $PROFILE_PLAYBOOK_FILE -f 1

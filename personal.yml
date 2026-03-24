@@ -7,14 +7,19 @@
   hosts: local
 
   vars_files:
-    - vars/main.yml
-    - overrides-personal.yml
+    - defaults/main.yml
+    - [ overrides-personal.yml, vars/overrides-personal.yml, overrides.yml ]
 
   vars:
     ansible_user_home: "{{ lookup('env', 'HOME') }}"
 
   tasks:
-    - name: Include Personal Role
+    - name: Include Global Tasks
+      ansible.builtin.include_tasks:
+        file: tasks/main.yml
+      tags: always
+
+    - name: Include Role 'rodriados.personal'
       ansible.builtin.include_role:
         name: rodriados.personal
       tags: always

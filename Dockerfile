@@ -16,4 +16,4 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 COPY --chown=${UBUNTU_USER}:${UBUNTU_USER} . .local-setup
 
-RUN .local-setup/setup.sh docker
+RUN .local-setup/setup.sh minimal

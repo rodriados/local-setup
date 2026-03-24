@@ -1,0 +1,23 @@
+---
+# Personal workspace setup automation.
+# @file The global default installation variables.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+settings:
+  dotfiles:
+    directory: "{{ ansible_user_home }}/.dotfiles"
+
+default_packages:
+  - bash-completion
+  - coreutils
+  - curl
+  - findutils
+  - gawk
+  - git
+  - grep
+  - jq
+  - openssl
+  - rsync
+  - ssh
+  - wget

@@ -1,0 +1,14 @@
+---
+# Personal workspace setup automation.
+# @file The global playbook tasks list.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Include OS-Specific Variables
+  ansible.builtin.include_vars:
+    file: "{{ item }}"
+  with_first_found:
+    - files:
+        - "defaults/{{ ansible_facts['distribution'] | lower }}.yml"
+        - "defaults/{{ ansible_facts['os_family'] | lower }}.yml"
+      skip: true

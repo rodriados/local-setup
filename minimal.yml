@@ -7,14 +7,19 @@
   hosts: local
 
   vars_files:
-    - vars/main.yml
-    - overrides-minimal.yml
+    - defaults/main.yml
+    - [ overrides-minimal.yml, vars/overrides-minimal.yml, overrides.yml ]
 
   vars:
     ansible_user_home: "{{ lookup('env', 'HOME') }}"
 
   tasks:
-    - name: Include Minimal Role
+    - name: Include Global Tasks
+      ansible.builtin.include_tasks:
+        file: tasks/main.yml
+      tags: always
+
+    - name: Include Role 'rodriados.minimal'
       ansible.builtin.include_role:
         name: rodriados.minimal
       tags: always
