@@ -4,10 +4,6 @@
 # @author Rodrigo Siqueira <me@rodriados.com>
 # @copyright 2026-present Rodrigo Siqueira
 
-settings:
-  dotfiles:
-    directory: "{{ ansible_user_home }}/.dotfiles"
-
 default_packages:
   - bash-completion
   - coreutils
@@ -17,6 +13,7 @@ default_packages:
   - git
   - grep
   - jq
+  - nano
   - openssl
   - rsync
   - ssh

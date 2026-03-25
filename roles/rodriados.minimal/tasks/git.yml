@@ -1,0 +1,27 @@
+---
+# Personal workspace setup automation.
+# @file The git installation tasks list.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Assert 'git.user_name'
+  ansible.builtin.assert:
+    that: git.user_name | length > 0
+    msg: "Must define git user name"
+
+- name: Assert 'git.user_email'
+  ansible.builtin.assert:
+    that: git.user_email | length > 0
+    msg: "Must define git user email"
+
+- name: Configure Git User Name
+  community.general.git_config:
+    name: user.name
+    scope: global
+    value: "{{ git.user_name }}"
+
+- name: Configure Git User Email
+  community.general.git_config:
+    name: user.email
+    scope: global
+    value: "{{ git.user_email }}"

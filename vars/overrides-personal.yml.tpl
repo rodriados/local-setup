@@ -7,18 +7,28 @@
 enable_installation:
   git: true
   dotfiles: true
+  #ohmyzsh: true
+  nodejs: true
   essentials: true
+  cuda: true
+  haskell: true
   softwares: true
 
-settings:
-  git:
-    user_name: "Your Name"
-    user_email: "you@example.com"
+git:
+  user_name: "Your Name"
+  user_email: "you@example.com"
 
-  dotfiles:
-    repository: https://github.com/you/dotfiles.git
-    installation_command: ./setup.sh
+dotfiles:
+  repository: https://github.com/you/dotfiles.git
+  installation_command: ./setup.sh
 
-  packages: []
+cuda:
+  version: auto
 
-  softwares: []
+extra_packages: []
+
+softwares:
+  - google-chrome
+  - postman
+  - spotify
+  - vscode

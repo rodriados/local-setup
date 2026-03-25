@@ -9,6 +9,8 @@ RUN apt-get install -y sudo python3 pipx
 RUN useradd -ms /bin/bash -G sudo ${UBUNTU_USER}
 RUN passwd -d ${UBUNTU_USER}
 
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
 USER ${UBUNTU_USER}
 WORKDIR /home/${UBUNTU_USER}
 

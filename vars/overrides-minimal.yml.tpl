@@ -7,15 +7,17 @@
 enable_installation:
   git: true
   dotfiles: true
+  #ohmyzsh: true
+  nodejs: true
   essentials: true
 
-settings:
-  git:
-    user_name: "Your Name"
-    user_email: "you@example.com"
+git:
+  user_name: "Your Name"
+  user_email: "you@example.com"
 
-  dotfiles:
-    repository: https://github.com/you/dotfiles.git
-    installation_command: ./setup.sh
+dotfiles:
+  repository: https://github.com/you/dotfiles.git
+  directory: "{{ ansible_user_home }}/.dotfiles"
+  installation_command: setup.sh
 
-  packages: []
+extra_packages: []

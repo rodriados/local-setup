@@ -1,0 +1,19 @@
+---
+# Personal workspace setup automation.
+# @file The minimal profile main tasks list.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Install Packages
+  ansible.builtin.package:
+    name: "{{ global + profile }}"
+    state: present
+  vars:
+    global: "{{ default_packages | default([]) }}"
+    profile: "{{ extra_packages | default([]) }}"
+  become: true
+
+- name: Import Git Tasks
+  ansible.builtin.include_tasks:
+    file: git.yml
+  when: enable_installation.git | default(false)
