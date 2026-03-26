@@ -1,2 +1,5 @@
-*         text=auto
-*.yml.tpl linguist-language=YAML
+*       text=auto
+*.tpl   linguist-detectable=false
+*.tpl   linguist-language=YAML
+*.yml   linguist-detectable=true
+*.yml   linguist-language=YAML
