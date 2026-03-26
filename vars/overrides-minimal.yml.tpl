@@ -16,8 +16,10 @@ git:
   user_email: "you@example.com"
 
 dotfiles:
-  repository: https://github.com/you/dotfiles.git
+  type: repository # repository, archive
+  src: "git@github.com:you/dotfiles.git"
   directory: "{{ ansible_user_home }}/.dotfiles"
-  installation_command: setup.sh
+  installation_command: scripts/setup.sh
+  run_as_root: false
 
 extra_packages: []

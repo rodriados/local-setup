@@ -1,0 +1,53 @@
+---
+# Personal workspace setup automation.
+# @file The dotfiles installation tasks list.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Install Dotfiles
+  when: enable_installation.dotfiles | default(false)
+  ignore_errors: true
+  block:
+    - name: Assert 'dotfiles.type'
+      ansible.builtin.assert:
+        that:
+          - dotfiles.type | length > 0
+          - dotfiles.type in supported_types
+        msg: "Must define dotfiles repository"
+        quiet: true
+      vars:
+        supported_types:
+          - repository
+          - archive
+
+    - name: Assert 'dotfiles.src'
+      ansible.builtin.assert:
+        that:
+          - dotfiles.src | length > 0
+        msg: "Must define dotfiles source"
+        quiet: true
+
+    - name: Install Dotfiles Repository
+      when: dotfiles.type == "repository"
+      ansible.builtin.git:
+        repo: "{{ dotfiles.src }}"
+        dest: "{{ dotfiles.directory }}"
+        accept_newhostkey: true
+        clone: yes
+        update: yes
+      environment:
+        GIT_TERMINAL_PROMPT: "0"
+
+    - name: Install Dotfiles Archive
+      when: dotfiles.type != "repository"
+      ansible.builtin.unarchive:
+        src: "{{ dotfiles.src }}"
+        dest: "{{ dotfiles.directory }}"
+        remote_src: true
+
+    - name: Run Dotfiles Installation Command
+      when: dotfiles.installation_command | default('') | length > 0
+      ansible.builtin.command:
+        cmd: "{{ dotfiles.installation_command | quote }}"
+        chdir: "{{ dotfiles.directory }}"
+      become: "{{ dotfiles.run_as_root | default(false) | bool }}"

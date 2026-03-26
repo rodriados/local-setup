@@ -16,4 +16,9 @@
 - name: Import Git Tasks
   ansible.builtin.include_tasks:
     file: git.yml
-  when: enable_installation.git | default(false)
+  tags: git
+
+- name: Import Dotfiles Tasks
+  ansible.builtin.include_tasks:
+    file: dotfiles.yml
+  tags: dotfiles
