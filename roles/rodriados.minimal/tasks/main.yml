@@ -4,6 +4,11 @@
 # @author Rodrigo Siqueira <me@rodriados.com>
 # @copyright 2026-present Rodrigo Siqueira
 
+- name: Import Development Essentials Tasks
+  ansible.builtin.include_tasks:
+    file: essentials.yml
+  tags: essentials
+
 - name: Install Packages
   ansible.builtin.package:
     name: "{{ global + profile }}"

@@ -13,6 +13,12 @@
   vars:
     ansible_user_home: "{{ lookup('env', 'HOME') }}"
 
+  pre_tasks:
+    - name: Execute Pre-Tasks
+      ansible.builtin.include_tasks:
+        file: tasks/pre-tasks.yml
+      tags: always
+
   tasks:
     - name: Include Global Tasks
       ansible.builtin.include_tasks:

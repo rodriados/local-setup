@@ -1,0 +1,31 @@
+---
+# Personal workspace setup automation.
+# @file The essentials installation tasks list.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Install Development Essentials for Linux
+  when:
+    - enable_installation.essentials | default(false)
+    - ansible_facts['system'] == "Linux"
+  ignore_errors: true
+  block:
+    - name: Install 'build-essential'
+      ansible.builtin.package:
+        name: build-essential
+        state: present
+      become: true
+
+- name: Install Development Essentials for MacOS
+  when:
+    - enable_installation.essentials | default(false)
+    - ansible_facts['system'] == "Darwin"
+  ignore_errors: true
+  block:
+    - name: Install Command Line Tools
+      ansible.builtin.include_role:
+        name: elliotweiser.osx-command-line-tools
+
+    - name: Install Homebrew
+      ansible.builtin.include_role:
+        name: geerlingguy.mac.homebrew
