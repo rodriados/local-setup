@@ -16,6 +16,8 @@ WORKDIR /home/${UBUNTU_USER}
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+RUN pipx install --include-deps ansible
+
 COPY --chown=${UBUNTU_USER}:${UBUNTU_USER} . .local-setup
 
 RUN .local-setup/setup.sh minimal
