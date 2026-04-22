@@ -1,14 +1,12 @@
-#!/bin/sh
+#!/usr/bin/env sh
 # Personal workspace setup automation.
 # @file The initial setup and workspace installation script.
 # @author Rodrigo Siqueira <me@rodriados.com>
 # @copyright 2026-present Rodrigo Siqueira
 set -e
 
-OSNAME=$(uname -s)
-USERNAME=$(whoami)
-SCRIPTPATH=$(cd -- "$(dirname "$0")" >/dev/null 2>&1; pwd -P)
 PROFILE="$1"
+SCRIPTPATH=$(cd -- "$(dirname "$0")" >/dev/null 2>&1; pwd -P)
 
 # Auxiliary function to bail out with a message.
 # @param $1 The informative message to bail out of the script with.
@@ -20,7 +18,7 @@ die () {
 
 # Checks the OS that we are running on and bails out if unknown.
 # Running on an unknown OS might cause potentially dangerous unexpected behavior.
-if ! echo "$OSNAME" | grep -E -q "^(Darwin|Linux)$"; then
+if ! uname -s | grep -E -q "^(Darwin|Linux)$"; then
   die "Current OS is not supported."
 fi
 
@@ -37,7 +35,8 @@ cd "$SCRIPTPATH"
 # By default, the "minimal" profile is selected, which will lead to the installation
 # of the base minimum required to use the workstation.
 if [ -z "$PROFILE" ] && [ -t 0 ]; then
-  read -p "Inform the profile to install [minimal]: " PROFILE
+  printf "Inform the profile to install [minimal]: "
+  read -r PROFILE
 fi
 
 PROFILE="${PROFILE:-minimal}"
@@ -86,4 +85,4 @@ fi
 # We use ansible to guide the installation process, but we must first verify whether
 # it is itself installed and do so if needed.
 ansible-galaxy install -p roles -r requirements.yml
-ansible-playbook $PROFILE_PLAYBOOK_FILE -f 1
+ansible-playbook "$PROFILE_PLAYBOOK_FILE" -f 1
