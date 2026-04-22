@@ -11,7 +11,7 @@ SCRIPTPATH=$(cd -- "$(dirname "$0")" >/dev/null 2>&1; pwd -P)
 # Auxiliary function to bail out with a message.
 # @param $1 The informative message to bail out of the script with.
 # @return Never returns and kills execution.
-die () {
+fatal () {
   echo "$1" >&2
   exit 1
 }
@@ -19,14 +19,14 @@ die () {
 # Checks the OS that we are running on and bails out if unknown.
 # Running on an unknown OS might cause potentially dangerous unexpected behavior.
 if ! uname -s | grep -E -q "^(Darwin|Linux)$"; then
-  die "Current OS is not supported."
+  fatal "Current OS is not supported."
 fi
 
 # Checks whether the script is running as root and bails out if so.
 # Whenever root privileges are needed, it will be asked during installation. Doing
 # so for the whole process is dangerous and may cause issues.
 if [ "$(id -u)" -eq 0 ]; then
-  die "Please, do not start installation as root."
+  fatal "Please, do not start installation as root."
 fi
 
 cd "$SCRIPTPATH"
@@ -40,12 +40,11 @@ if [ -z "$PROFILE" ] && [ -t 0 ]; then
 fi
 
 PROFILE="${PROFILE:-minimal}"
-PROFILE_PLAYBOOK_FILE="$PROFILE.yml"
 PROFILE_OVERRIDES_TEMPLATE="vars/overrides-$PROFILE.yml.tpl"
-PROFILE_OVERRIDES_FILE="overrides-$PROFILE.yml"
+PROFILE_OVERRIDES_FILE="overrides.yml"
 
-if [ ! -f "$PROFILE_PLAYBOOK_FILE" ]; then
-  die "Unknown profile: $PROFILE"
+if [ ! -f "$PROFILE_OVERRIDES_TEMPLATE" ]; then
+  fatal "Unknown profile: $PROFILE"
 fi
 
 if [ -n "${OVERRIDE+x}" ] || [ ! -f "$PROFILE_OVERRIDES_FILE" ]; then
@@ -64,7 +63,7 @@ if [ -n "${OVERRIDE+x}" ] || [ ! -f "$PROFILE_OVERRIDES_FILE" ]; then
   else
     # When installing on an environment where the user cannot directly edit the file,
     # then we must exit to give them a chance to edit the settings manually.
-    die "You must copy and edit the corresponding profile template variables file."
+    fatal "You must copy and edit the corresponding profile template variables file."
   fi
 fi
 
@@ -77,12 +76,12 @@ if ! command -v "ansible" >/dev/null 2>&1; then
     pipx ensurepath
     PATH="$PATH:$HOME/.local/bin"
   else
-    die "Setup requires pipx to be installed in the system."
+    fatal "Setup requires pipx to be installed in the system."
   fi
 fi
 
 # Start installation process for the selected profile.
 # We use ansible to guide the installation process, but we must first verify whether
 # it is itself installed and do so if needed.
-ansible-galaxy install -p roles -r requirements.yml
-ansible-playbook "$PROFILE_PLAYBOOK_FILE" -f 1
+ansible-galaxy install -r requirements.yml
+ansible-playbook main.yml -f 1 -e "profile=$PROFILE"

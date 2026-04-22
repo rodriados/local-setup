@@ -9,6 +9,7 @@ default_packages:
   - coreutils
   - curl
   - findutils
+  - fzf
   - gawk
   - git
   - grep

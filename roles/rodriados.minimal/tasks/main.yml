@@ -11,11 +11,11 @@
 
 - name: Install Packages
   ansible.builtin.package:
-    name: "{{ global + profile }}"
+    name: "{{ global + extras }}"
     state: present
   vars:
     global: "{{ default_packages | default([]) }}"
-    profile: "{{ extra_packages | default([]) }}"
+    extras: "{{ extra_packages | default([]) }}"
   become: true
 
 - name: Import Git Tasks

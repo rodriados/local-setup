@@ -1,0 +1,35 @@
+---
+# Personal workspace setup automation.
+# @file The playbook to perform configurable system installation.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+- name: Workstation Setup
+  hosts: local
+
+  vars_files:
+    - defaults/main.yml
+    - [ overrides.yml, vars/overrides.yml ]
+
+  vars:
+    ansible_user_home: "{{ lookup('env', 'HOME') }}"
+    active_profile: "{{ profile | default('minimal') }}"
+    profile_to_role:
+      minimal:  "rodriados.minimal"
+      personal: "rodriados.personal"
+
+  tasks:
+    - name: Include Global Tasks
+      ansible.builtin.include_tasks:
+        file: tasks/main.yml
+      tags: always
+
+    - name: Validate Selected Profile
+      ansible.builtin.assert:
+        that: active_profile in profile_to_role
+        msg: "Profile '{{ active_profile }}' is unknown"
+        quiet: true
+
+    - name: Include Installation Profile Role
+      ansible.builtin.include_role:
+        name: "{{ profile_to_role[active_profile] }}"
+      tags: always
