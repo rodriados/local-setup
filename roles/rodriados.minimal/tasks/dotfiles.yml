@@ -5,10 +5,9 @@
 # @copyright 2026-present Rodrigo Siqueira
 
 - name: Install Dotfiles
-  when: enable_installation.dotfiles | default(false)
   ignore_errors: true
   block:
-    - name: Assert 'dotfiles.type'
+    - name: Assert Dotfiles Installation Type
       ansible.builtin.assert:
         that:
           - dotfiles.type | length > 0
@@ -20,7 +19,7 @@
           - repository
           - archive
 
-    - name: Assert 'dotfiles.src'
+    - name: Assert Dotfiles Source
       ansible.builtin.assert:
         that:
           - dotfiles.src | length > 0
@@ -39,7 +38,7 @@
         GIT_TERMINAL_PROMPT: "0"
 
     - name: Install Dotfiles Archive
-      when: dotfiles.type != "repository"
+      when: dotfiles.type == "archive"
       ansible.builtin.unarchive:
         src: "{{ dotfiles.src }}"
         dest: "{{ dotfiles.directory }}"

@@ -5,17 +5,16 @@
 # @copyright 2026-present Rodrigo Siqueira
 
 - name: Install Git
-  when: enable_installation.git | default(false)
   ignore_errors: true
   block:
-    - name: Assert 'git.user_name'
+    - name: Assert Git User Name
       ansible.builtin.assert:
         that:
           - git.user_name | length > 0
         msg: "Must define git user name"
         quiet: true
 
-    - name: Assert 'git.user_email'
+    - name: Assert Git Email
       ansible.builtin.assert:
         that:
           - git.user_email | length > 0

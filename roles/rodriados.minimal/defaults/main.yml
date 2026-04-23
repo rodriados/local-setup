@@ -1,0 +1,31 @@
+---
+# Personal workspace setup automation.
+# @file The minimal profile default installation variables.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+essentials:
+  install: false
+
+git:
+  install: false
+  user_name: none
+  user_email: none
+
+dotfiles:
+  install: false
+  type: none # repository or archive
+  src: none
+  directory: none
+  installation_command: none
+  run_as_root: false
+
+ohmyzsh:
+  install: false
+  theme: none
+
+nodejs:
+  install: false
+
+default_packages: []
+extra_packages:   []

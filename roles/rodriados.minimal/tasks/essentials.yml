@@ -5,9 +5,7 @@
 # @copyright 2026-present Rodrigo Siqueira
 
 - name: Install Development Essentials for Linux
-  when:
-    - enable_installation.essentials | default(false)
-    - ansible_facts['system'] == "Linux"
+  when: ansible_facts.system == "Linux"
   ignore_errors: true
   block:
     - name: Install 'build-essential'
@@ -17,9 +15,7 @@
       become: true
 
 - name: Install Development Essentials for MacOS
-  when:
-    - enable_installation.essentials | default(false)
-    - ansible_facts['system'] == "Darwin"
+  when: ansible_facts.system == "Darwin"
   ignore_errors: true
   block:
     - name: Install Command Line Tools

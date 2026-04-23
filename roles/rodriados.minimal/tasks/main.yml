@@ -7,6 +7,7 @@
 - name: Import Development Essentials Tasks
   ansible.builtin.include_tasks:
     file: essentials.yml
+  when: essentials.install | default(false)
   tags: essentials
 
 - name: Install Packages
@@ -21,9 +22,11 @@
 - name: Import Git Tasks
   ansible.builtin.include_tasks:
     file: git.yml
+  when: git.install | default(false)
   tags: git
 
 - name: Import Dotfiles Tasks
   ansible.builtin.include_tasks:
     file: dotfiles.yml
+  when: dotfiles.install | default(false)
   tags: dotfiles

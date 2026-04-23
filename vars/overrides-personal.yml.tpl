@@ -4,21 +4,16 @@
 # @author Rodrigo Siqueira <me@rodriados.com>
 # @copyright 2026-present Rodrigo Siqueira
 
-enable_installation:
-  git: true
-  dotfiles: true
-  #ohmyzsh: true
-  nodejs: true
-  essentials: true
-  cuda: true
-  haskell: true
-  softwares: true
+essentials:
+  install: true
 
 git:
+  install: true
   user_name: "Your Name"
   user_email: "you@example.com"
 
 dotfiles:
+  install: true
   type: repository # repository or archive
   src: "https://github.com/you/dotfiles.git"
   directory: "{{ ansible_user_home }}/.dotfiles"
@@ -26,7 +21,8 @@ dotfiles:
   run_as_root: false
 
 cuda:
-  version: auto
+  install: true
+  version: latest
 
 extra_packages: []
 
