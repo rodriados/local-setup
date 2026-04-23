@@ -36,6 +36,7 @@
         update: yes
       environment:
         GIT_TERMINAL_PROMPT: "0"
+      notify: "dotfiles successfully installed"
 
     - name: Install Dotfiles Archive
       when: dotfiles.type == "archive"
@@ -43,10 +44,4 @@
         src: "{{ dotfiles.src }}"
         dest: "{{ dotfiles.directory }}"
         remote_src: true
-
-    - name: Run Dotfiles Installation Command
-      when: dotfiles.installation_command | default('') | length > 0
-      ansible.builtin.command:
-        cmd: "{{ dotfiles.installation_command | quote }}"
-        chdir: "{{ dotfiles.directory }}"
-      become: "{{ dotfiles.run_as_root | default(false) | bool }}"
+      notify: "dotfiles successfully installed"

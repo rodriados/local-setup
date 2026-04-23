@@ -1,0 +1,13 @@
+---
+# Personal workspace setup automation.
+# @file The minimal profile handlers list.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Run Dotfiles Installation Command
+  ansible.builtin.command:
+    cmd: "{{ dotfiles.installation_command | quote }}"
+    chdir: "{{ dotfiles.directory }}"
+  become: "{{ dotfiles.run_as_root | default(false) | bool }}"
+  when: dotfiles.installation_command | default('') | length > 0
+  listen: "dotfiles successfully installed"
