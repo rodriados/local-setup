@@ -11,7 +11,7 @@
       ansible.builtin.package:
         name: fzf
         state: present
-      become: true
+      become: "{{ ansible_facts.pkg_mgr != 'homebrew' }}"
 
     - name: Hook FZF into Bash
       ansible.builtin.lineinfile:

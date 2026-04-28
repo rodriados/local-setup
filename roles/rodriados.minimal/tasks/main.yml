@@ -12,12 +12,14 @@
 
 - name: Install Packages
   ansible.builtin.package:
-    name: "{{ global + extras }}"
+    name: "{{ item }}"
     state: present
+  loop: "{{ universal + extras }}"
   vars:
-    global: "{{ default_packages | default([]) }}"
+    universal: "{{ default_packages | default([]) }}"
     extras: "{{ extra_packages | default([]) }}"
-  become: true
+  become: "{{ ansible_facts.pkg_mgr != 'homebrew' }}"
+  ignore_errors: true
 
 - name: Import Git Tasks
   ansible.builtin.include_tasks:

@@ -8,7 +8,7 @@
   when: ansible_facts.system == "Linux"
   ignore_errors: true
   block:
-    - name: Install 'build-essential'
+    - name: Install Build-Essential
       ansible.builtin.package:
         name: build-essential
         state: present
