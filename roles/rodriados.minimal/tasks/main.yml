@@ -25,6 +25,11 @@
   when: git.install | default(false)
   tags: git
 
+- name: Install Terminal Tools
+  ansible.builtin.include_tasks:
+    file: terminal.yml
+  tags: terminal
+
 - name: Import Dotfiles Tasks
   ansible.builtin.include_tasks:
     file: dotfiles.yml

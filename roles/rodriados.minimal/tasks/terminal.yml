@@ -1,0 +1,24 @@
+---
+# Personal workspace setup automation.
+# @file The minimal profile terminal tools installation tasks.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Install Terminal Tools
+  ignore_errors: true
+  block:
+    - name: Determine Target Shell Terminal
+      ansible.builtin.set_fact:
+        terminal_target_shell: "{{ terminal.target | default(ansible_facts['user_shell']) }}"
+
+    - name: Import FZF Installation Tasks
+      ansible.builtin.include_tasks:
+        file: terminal/fzf.yml
+      when: terminal.fzf | default(false)
+      tags: fzf
+
+    - name: Import Zoxide Installation Tasks
+      ansible.builtin.include_tasks:
+        file: terminal/zoxide.yml
+      when: terminal.zoxide | default(false)
+      tags: zoxide

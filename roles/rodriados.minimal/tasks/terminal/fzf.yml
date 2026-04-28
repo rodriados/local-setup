@@ -1,0 +1,30 @@
+---
+# Personal workspace setup automation.
+# @file The fzf installation tasks list.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Install FZF Terminal Tool
+  ignore_errors: true
+  block:
+    - name: Install FZF via Package Manager
+      ansible.builtin.package:
+        name: fzf
+        state: present
+      become: true
+
+    - name: Hook FZF into Bash
+      ansible.builtin.lineinfile:
+        line: 'eval "$(fzf --bash)"'
+        path: "~/.bash_profile"
+        state: present
+        create: yes
+      when: "'bash' in terminal_target_shell"
+
+    - name: Hook FZF into Zsh
+      ansible.builtin.lineinfile:
+        line: 'source <(fzf --zsh)'
+        path: "~/.zprofile"
+        state: present
+        create: yes
+      when: "'zsh' in terminal_target_shell"

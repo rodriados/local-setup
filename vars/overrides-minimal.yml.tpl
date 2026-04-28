@@ -12,6 +12,10 @@ git:
   user_name: "Your Name"
   user_email: "you@example.com"
 
+terminal:
+  fzf: true
+  zoxide: true
+
 dotfiles:
   install: true
   type: repository # repository or archive

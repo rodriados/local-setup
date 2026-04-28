@@ -12,6 +12,10 @@ git:
   user_name: none
   user_email: none
 
+terminal:
+  fzf: false
+  zoxide: false
+
 dotfiles:
   install: false
   type: none # repository or archive
@@ -19,10 +23,6 @@ dotfiles:
   directory: none
   installation_command: none
   run_as_root: false
-
-ohmyzsh:
-  install: false
-  theme: none
 
 nodejs:
   install: false

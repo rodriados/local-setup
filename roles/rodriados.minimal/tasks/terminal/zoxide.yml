@@ -1,0 +1,31 @@
+---
+# Personal workspace setup automation.
+# @file The zoxide installation tasks list.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Install Zoxide Terminal Tool
+  ignore_errors: true
+  block:
+    - name: Install Zoxide via Official Script
+      ansible.builtin.shell:
+        cmd: curl -sSfL {{ url | quote }} | bash
+        creates: "{{ ansible_user_home }}/.local/bin/zoxide"
+      vars:
+        url: https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh
+
+    - name: Hook Zoxide into Bash
+      ansible.builtin.lineinfile:
+        line: 'eval "$(zoxide init bash --cmd cd)"'
+        path: "~/.bash_profile"
+        state: present
+        create: yes
+      when: "'bash' in terminal_target_shell"
+
+    - name: Hook Zoxide into Zsh
+      ansible.builtin.lineinfile:
+        line: 'eval "$(zoxide init zsh --cmd cd)"'
+        path: "~/.zprofile"
+        state: present
+        create: yes
+      when: "'zsh' in terminal_target_shell"
