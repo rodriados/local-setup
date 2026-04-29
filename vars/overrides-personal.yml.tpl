@@ -18,7 +18,7 @@ terminal:
 
 dotfiles:
   install: true
-  type: repository # repository or archive
+  type: repository            # repository or archive
   src: "https://github.com/you/dotfiles.git"
   directory: "{{ ansible_user_home }}/.dotfiles"
   installation_command: script/setup.sh

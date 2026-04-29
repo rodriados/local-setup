@@ -8,13 +8,13 @@
 
   vars_files:
     - defaults/main.yml
-    - [ overrides.yml, vars/overrides.yml ]
+    - [overrides.yml, vars/overrides.yml]
 
   vars:
     ansible_user_home: "{{ lookup('env', 'HOME') }}"
     active_profile: "{{ profile | default('minimal') }}"
     profile_to_role:
-      minimal:  "rodriados.minimal"
+      minimal: "rodriados.minimal"
       personal: "rodriados.personal"
 
   tasks:

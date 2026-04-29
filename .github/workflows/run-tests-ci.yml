@@ -1,0 +1,29 @@
+---
+name: run-tests-ci
+
+on: [push, pull_request]
+
+jobs:
+  test-runner:
+    strategy:
+      matrix:
+        config:
+          - os: ubuntu-latest
+            profile: personal
+          - os: macos-latest
+            profile: minimal
+      fail-fast: false
+    runs-on: ${{ matrix.config.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip3 install ansible
+
+      - name: Dry-run installation playbook
+        run: |
+          ansible-galaxy install -r requirements.yml
+          ansible-playbook --check main.yml -e "profile={{ matrix.config.profile }}"

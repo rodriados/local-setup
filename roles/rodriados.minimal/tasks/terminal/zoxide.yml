@@ -19,7 +19,7 @@
         line: 'eval "$(zoxide init bash --cmd cd)"'
         path: "~/.bash_profile"
         state: present
-        create: yes
+        create: true
       when: "'bash' in terminal_target_shell"
 
     - name: Hook Zoxide into Zsh
@@ -27,5 +27,5 @@
         line: 'eval "$(zoxide init zsh --cmd cd)"'
         path: "~/.zprofile"
         state: present
-        create: yes
+        create: true
       when: "'zsh' in terminal_target_shell"

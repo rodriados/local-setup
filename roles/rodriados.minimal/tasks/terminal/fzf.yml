@@ -18,7 +18,7 @@
         line: 'eval "$(fzf --bash)"'
         path: "~/.bash_profile"
         state: present
-        create: yes
+        create: true
       when: "'bash' in terminal_target_shell"
 
     - name: Hook FZF into Zsh
@@ -26,5 +26,5 @@
         line: 'source <(fzf --zsh)'
         path: "~/.zprofile"
         state: present
-        create: yes
+        create: true
       when: "'zsh' in terminal_target_shell"

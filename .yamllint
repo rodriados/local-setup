@@ -1,0 +1,18 @@
+---
+extends: default
+
+yaml-files:
+  - '*.yml'
+  - '*.yml.tpl'
+  - '.yamllint'
+
+rules:
+  line-length:
+    max: 100
+  truthy:
+    ignore:
+      - .github
+
+ignore:
+  - roles/
+  - "!roles/rodriados*"

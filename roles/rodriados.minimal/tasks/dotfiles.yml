@@ -32,8 +32,8 @@
         repo: "{{ dotfiles.src }}"
         dest: "{{ dotfiles.directory }}"
         accept_newhostkey: true
-        clone: yes
-        update: yes
+        clone: true
+        update: true
       environment:
         GIT_TERMINAL_PROMPT: "0"
       notify: "dotfiles successfully installed"

@@ -18,7 +18,7 @@ terminal:
 
 dotfiles:
   install: false
-  type: none # repository or archive
+  type: none                  # repository or archive
   src: none
   directory: none
   installation_command: none
@@ -28,4 +28,4 @@ nodejs:
   install: false
 
 default_packages: []
-extra_packages:   []
+extra_packages: []
