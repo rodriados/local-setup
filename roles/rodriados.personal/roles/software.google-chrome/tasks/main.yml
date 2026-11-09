@@ -1,0 +1,27 @@
+---
+# Personal workspace setup automation.
+# @file The Google Chrome installation role tasks.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Install Google Chrome on Linux
+  when: ansible_facts.system == "Linux"
+  ignore_errors: true
+  block:
+    - name: Configure Google Chrome repository
+      ansible.builtin.include_tasks:
+        file: "repository/{{ ansible_facts.os_family | lower }}.yml"
+
+    - name: Install Google Chrome stable
+      ansible.builtin.package:
+        name: google-chrome-stable
+        state: present
+        update_cache: true
+      become: true
+
+- name: Install Google Chrome on MacOS
+  when: ansible_facts.system == "Darwin"
+  become: false
+  community.general.homebrew_cask:
+    name: google-chrome
+    state: present

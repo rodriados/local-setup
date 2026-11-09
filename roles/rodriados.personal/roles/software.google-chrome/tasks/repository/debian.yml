@@ -1,0 +1,31 @@
+---
+# Personal workspace setup automation.
+# @file Google Chrome repository setup tasks for Debian-like Linux.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Create APT keyrings directory
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: "0755"
+  become: true
+
+- name: Download Google Chrome signing key
+  ansible.builtin.get_url:
+    url: "{{ google_chrome_signing_key_url }}"
+    dest: /etc/apt/keyrings/google-chrome.asc
+    mode: "0644"
+  become: true
+
+- name: Add Google Chrome APT repository
+  ansible.builtin.deb822_repository:
+    name: google-chrome
+    types: deb
+    uris: "{{ google_chrome_apt_repository_url }}"
+    suites: stable
+    components: main
+    architectures: amd64
+    signed_by: /etc/apt/keyrings/google-chrome.asc
+    state: present
+  become: true

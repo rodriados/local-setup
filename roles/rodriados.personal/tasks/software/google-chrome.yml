@@ -1,0 +1,9 @@
+---
+# Personal workspace setup automation.
+# @file The tasks for installing Google Chrome.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Install Google Chrome
+  ansible.builtin.include_role:
+    name: software.google-chrome

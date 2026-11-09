@@ -1,0 +1,11 @@
+---
+# Personal workspace setup automation.
+# @file The personal profile main tasks list.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Install Softwares
+  ansible.builtin.include_tasks:
+    file: "software/{{ item }}.yml"
+  loop: "{{ softwares | default([]) }}"
+  ignore_errors: true

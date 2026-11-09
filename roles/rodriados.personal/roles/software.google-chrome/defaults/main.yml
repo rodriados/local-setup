@@ -1,0 +1,9 @@
+---
+# Personal workspace setup automation.
+# @file Google Chrome installation role defaults.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+google_chrome_signing_key_url: https://dl.google.com/linux/linux_signing_key.pub
+google_chrome_apt_repository_url: https://dl.google.com/linux/chrome/deb
+google_chrome_rpm_repository_url: https://dl.google.com/linux/chrome/rpm/stable/$basearch
