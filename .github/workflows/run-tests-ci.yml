@@ -26,4 +26,4 @@ jobs:
       - name: Dry-run installation playbook
         run: |
           ansible-galaxy install -r requirements.yml
-          ansible-playbook --check main.yml -e "profile={{ matrix.config.profile }}"
+          ansible-playbook --check main.yml -e "profile=${{ matrix.config.profile }}"

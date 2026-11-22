@@ -1,3 +1,4 @@
+---
 # Personal workspace setup automation.
 # @file The DisplayLink drivers installation role tasks.
 # @author Rodrigo Siqueira <me@rodriados.com>
@@ -44,4 +45,3 @@
           ansible.builtin.apt:
             name: displaylink-driver
             state: present
-    
