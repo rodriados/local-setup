@@ -1,0 +1,9 @@
+---
+# Personal workspace setup automation.
+# @file The personal profile default installation variables.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+vscode:
+  extensions: []
+  settings: {}

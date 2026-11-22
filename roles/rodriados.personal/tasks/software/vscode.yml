@@ -1,0 +1,17 @@
+---
+# Personal workspace setup automation.
+# @file The tasks for installing Visual Studio Code.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Install Visual Studio Code
+  ansible.builtin.include_role:
+    name: gantsign.visual-studio-code
+  vars:
+    visual_studio_code_build: stable
+    visual_studio_code_gpgcheck: true
+    users:
+      - username: "{{ ansible_user }}"
+        visual_studio_code_extensions: "{{ vscode.extensions | default([]) }}"
+        visual_studio_code_settings: "{{ vscode.settings | default({}) }}"
+        visual_studio_code_settings_overwrite: true
