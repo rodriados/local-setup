@@ -1,0 +1,47 @@
+# Personal workspace setup automation.
+# @file The DisplayLink drivers installation role tasks.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Install DisplayLink drivers on Ubuntu
+  when:
+    - ansible_facts.system == "Linux"
+    - ansible_facts.distribution == "Ubuntu"
+  ignore_errors: true
+  block:
+    - name: Gather Ubuntu package facts
+      ansible.builtin.package_facts:
+        manager: apt
+
+    - name: Install DisplayLink drivers when not already installed
+      when: "'displaylink-driver' not in ansible_facts.packages"
+      become: true
+      block:
+        - name: Install required dependencies
+          ansible.builtin.package:
+            name: "{{ item }}"
+            state: present
+            update_cache: true
+          loop:
+            - "{{ displaylink_dependencies | default([]) }}"
+
+        - name: Download DisplayLink APT repository package
+          ansible.builtin.get_url:
+            url: "{{ displaylink_apt_repository_url }}"
+            dest: /tmp/synaptics-repository-keyring.deb
+            mode: "0644"
+
+        - name: Install DisplayLink APT repository package
+          ansible.builtin.apt:
+            deb: /tmp/synaptics-repository-keyring.deb
+            state: present
+
+        - name: Update APT package cache
+          ansible.builtin.apt:
+            update_cache: true
+
+        - name: Install DisplayLink drivers
+          ansible.builtin.apt:
+            name: displaylink-driver
+            state: present
+    

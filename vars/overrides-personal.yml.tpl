@@ -31,6 +31,7 @@ cuda:
 extra_packages: []
 
 softwares:
+  - displaylink
   - google-chrome
   - postman
   - spotify

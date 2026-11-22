@@ -84,4 +84,4 @@ fi
 # We use ansible to guide the installation process, but we must first verify whether
 # it is itself installed and do so if needed.
 ansible-galaxy install -r requirements.yml
-ansible-playbook main.yml -f 1 -e "profile=$PROFILE"
+ansible-playbook main.yml -K -f 1 -e "profile=$PROFILE"
