@@ -8,4 +8,3 @@
   ansible.builtin.include_tasks:
     file: "software/{{ item }}.yml"
   loop: "{{ softwares | default([]) }}"
-  ignore_errors: true

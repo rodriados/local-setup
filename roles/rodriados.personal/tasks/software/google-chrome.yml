@@ -6,4 +6,4 @@
 
 - name: Install Google Chrome
   ansible.builtin.include_role:
-    name: software.google-chrome
+    name: rodriados.personal/roles/software.google-chrome
