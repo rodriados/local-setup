@@ -1,0 +1,10 @@
+---
+# Personal workspace setup automation.
+# @file The tasks for installing Postman.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Install Postman
+  ansible.builtin.include_role:
+    name: gantsign.postman
+  tags: postman

@@ -1,7 +1,10 @@
 ---
 roles:
   - name: elliotweiser.osx-command-line-tools
+  - name: gantsign.default-web-browser
   - name: gantsign.visual-studio-code
+  - name: gantsign.postman
+  - name: geerlingguy.docker
 
 collections:
   - name: geerlingguy.mac

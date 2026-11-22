@@ -7,3 +7,9 @@
 - name: Install Google Chrome
   ansible.builtin.include_role:
     name: rodriados.personal/roles/software.google-chrome
+
+- name: Set Google Chrome as default browser
+  ansible.builtin.include_role:
+    name: gantsign.default-web-browser
+  vars:
+    default_web_browser: google-chrome

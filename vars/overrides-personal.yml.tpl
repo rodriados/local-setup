@@ -32,6 +32,7 @@ extra_packages: []
 
 softwares:
   - displaylink
+  - docker
   - google-chrome
   - postman
   - spotify
