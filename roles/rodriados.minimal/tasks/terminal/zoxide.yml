@@ -17,23 +17,15 @@
     - name: Hook Zoxide into Bash
       ansible.builtin.lineinfile:
         line: 'eval "$(zoxide init bash --cmd cd)"'
-        path: "{{ bash_profile_files | file_exist_or_last }}"
+        path: "{{ lookup('dotfile', '.bash_profile') }}"
         state: present
         create: true
-      vars:
-        bash_profile_files:
-          - "{{ '~/.bash_profile.local' | expanduser }}"
-          - "{{ '~/.bash_profile' | expanduser }}"
       when: "'bash' in terminal_target_shell"
 
     - name: Hook Zoxide into Zsh
       ansible.builtin.lineinfile:
         line: 'eval "$(zoxide init zsh --cmd cd)"'
-        path: "{{ zsh_profile_files | file_exist_or_last }}"
+        path: "{{ lookup('dotfile', '.zprofile') }}"
         state: present
         create: true
-      vars:
-        zsh_profile_files:
-          - "{{ '~/.zprofile.local' | expanduser }}"
-          - "{{ '~/.zprofile' | expanduser }}"
       when: "'zsh' in terminal_target_shell"
