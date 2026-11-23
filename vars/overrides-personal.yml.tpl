@@ -24,10 +24,6 @@ dotfiles:
   installation_command: script/setup.sh
   run_as_root: false
 
-cuda:
-  install: true
-  version: latest
-
 extra_packages: []
 
 softwares:

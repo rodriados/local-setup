@@ -37,11 +37,8 @@
             deb: /tmp/synaptics-repository-keyring.deb
             state: present
 
-        - name: Update APT package cache
-          ansible.builtin.apt:
-            update_cache: true
-
         - name: Install DisplayLink drivers
           ansible.builtin.apt:
             name: displaylink-driver
             state: present
+            update_cache: true
