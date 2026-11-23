@@ -4,6 +4,11 @@
 # @author Rodrigo Siqueira <me@rodriados.com>
 # @copyright 2026-present Rodrigo Siqueira
 
+- name: Install Drivers
+  ansible.builtin.include_tasks:
+    file: "driver/{{ item }}.yml"
+  loop: "{{ drivers | default([]) }}"
+
 - name: Install Softwares
   ansible.builtin.include_tasks:
     file: "software/{{ item }}.yml"

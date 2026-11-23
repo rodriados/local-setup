@@ -1,0 +1,27 @@
+---
+# Personal workspace setup automation.
+# @file The NVIDIA drivers installation tasks.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Install NVIDIA Drivers
+  block:
+    - name: Unload Nouveau Driver
+      community.general.modprobe:
+        name: nouveau
+        state: absent
+      ignore_errors: true
+
+    - name: Install NVIDIA Drivers
+      ansible.builtin.package:
+        name: "{{ nvidia_driver_package }}"
+        state: present
+
+    - name: Prevent NVIDIA Drivers from being Updated
+      ansible.builtin.dpkg_selections:
+        name: "{{ nvidia_driver_package }}"
+        selection: hold
+      become: true
+
+  vars:
+    nvidia_driver_package: "nvidia-driver-{{ nvidia.driver_version | default(580) }}"

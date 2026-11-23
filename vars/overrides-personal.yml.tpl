@@ -24,7 +24,13 @@ dotfiles:
   installation_command: script/setup.sh
   run_as_root: false
 
+nvidia:
+  driver_version: 580
+
 extra_packages: []
+
+drivers:
+  - nvidia
 
 softwares:
   - displaylink
