@@ -13,3 +13,7 @@
   ansible.builtin.include_tasks:
     file: "software/{{ item }}.yml"
   loop: "{{ softwares | default([]) }}"
+
+- name: Install Modules
+  ansible.builtin.include_tasks:
+    file: "modules.yml"

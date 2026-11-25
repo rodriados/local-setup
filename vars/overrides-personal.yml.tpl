@@ -39,3 +39,6 @@ softwares:
   - postman
   - spotify
   - vscode
+
+modules:
+  - cuda
