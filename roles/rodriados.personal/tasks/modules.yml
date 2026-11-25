@@ -64,6 +64,6 @@
         DBX_NON_INTERACTIVE: "1"
       loop: "{{ modules | default([]) }}"
       when: item not in installed_module_list.stdout
-  
+
   vars:
     distrobox_config_file_path: ~/.config/distrobox/distrobox.conf
