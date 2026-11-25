@@ -6,6 +6,7 @@
 
 - name: Prepare and Install Modules
   when: modules | default([]) | length > 0
+  tags: modules
   block:
     - name: Install Distrobox
       ansible.builtin.package:

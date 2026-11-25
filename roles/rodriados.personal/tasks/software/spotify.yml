@@ -7,3 +7,4 @@
 - name: Install Spotify
   ansible.builtin.include_role:
     name: odem.desktop.spotify
+  tags: spotify

@@ -7,13 +7,33 @@
 - name: Install Drivers
   ansible.builtin.include_tasks:
     file: "driver/{{ item }}.yml"
-  loop: "{{ drivers | default([]) }}"
+    apply:
+      tags: "{{ item }}"
+  loop:
+    - nvidia
+  when:
+    - drivers is defined
+    - item in drivers
+  tags: always
 
 - name: Install Softwares
   ansible.builtin.include_tasks:
     file: "software/{{ item }}.yml"
-  loop: "{{ softwares | default([]) }}"
+    apply:
+      tags: "{{ item }}"
+  loop:
+    - displaylink
+    - docker
+    - google-chrome
+    - postman
+    - spotify
+    - vscode
+  when:
+    - softwares is defined
+    - item in softwares
+  tags: always
 
 - name: Install Modules
   ansible.builtin.include_tasks:
     file: "modules.yml"
+  tags: modules

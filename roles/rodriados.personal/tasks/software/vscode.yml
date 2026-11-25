@@ -15,3 +15,4 @@
         visual_studio_code_extensions: "{{ vscode.extensions | default([]) }}"
         visual_studio_code_settings: "{{ vscode.settings | default({}) }}"
         visual_studio_code_keybindings: "{{ vscode.keybindings | default({}) }}"
+  tags: vscode
