@@ -6,22 +6,36 @@
 
 - name: Install Google Chrome on Linux
   when: ansible_facts.system == "Linux"
-  ignore_errors: true
+  become: true
   block:
-    - name: Configure Google Chrome repository
-      ansible.builtin.include_tasks:
-        file: "repository/{{ ansible_facts.os_family | lower }}.yml"
+    - name: Add Google Chrome APT Repository
+      ansible.builtin.deb822_repository:
+        name: google-chrome
+        types: deb
+        suites: stable
+        components: main
+        uris: "{{ google_chrome_apt_repository_url }}"
+        signed_by: "{{ google_chrome_signing_key_url }}"
+        state: present
+      when: ansible_facts.os_family == "Debian"
+
+    - name: Add Google Chrome YUM/DNF Repository
+      ansible.builtin.yum_repository:
+        name: google-chrome
+        description: Google Chrome
+        baseurl: "{{ google_chrome_rpm_repository_url }}"
+        gpgkey: "{{ google_chrome_signing_key_url }}"
+        gpgcheck: true
+        enabled: true
+      when: ansible_facts.os_family == "RedHat"
 
     - name: Install Google Chrome stable
       ansible.builtin.package:
         name: google-chrome-stable
         state: present
-        update_cache: true
-      become: true
 
 - name: Install Google Chrome on MacOS
   when: ansible_facts.system == "Darwin"
-  become: false
   community.general.homebrew_cask:
     name: google-chrome
     state: present
