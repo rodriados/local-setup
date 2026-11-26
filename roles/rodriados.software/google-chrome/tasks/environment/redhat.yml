@@ -1,0 +1,19 @@
+---
+# Personal workspace setup automation.
+# @file Google Chrome installation for RedHat-like Linux environments.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Add Google Chrome YUM/DNF Repository
+  ansible.builtin.yum_repository:
+    name: google-chrome
+    description: Google Chrome
+    baseurl: "{{ google_chrome_rpm_repository_url }}"
+    gpgkey: "{{ google_chrome_signing_key_url }}"
+    gpgcheck: true
+    enabled: true
+
+- name: Install Google Chrome Package
+  ansible.builtin.package:
+    name: google-chrome-stable
+    state: present
