@@ -1,0 +1,19 @@
+---
+# Personal workspace setup automation.
+# @file Visual Studio Code installation for RedHat-like Linux environments.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Add Visual Studio Code YUM/DNF Repository
+  ansible.builtin.yum_repository:
+    name: vscode
+    description: Visual Studio Code
+    baseurl: "{{ vscode_rpm_repository_url }}"
+    gpgkey: "{{ vscode_signing_key_url }}"
+    gpgcheck: true
+    enabled: true
+
+- name: Install Visual Studio Code Package
+  ansible.builtin.dnf:
+    name: code
+    state: present

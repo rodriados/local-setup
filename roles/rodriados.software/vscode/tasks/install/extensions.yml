@@ -1,0 +1,35 @@
+---
+# Personal workspace setup automation.
+# @file The Visual Studio Code extensions installation tasks.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Install Visual Studio Code Extensions
+  when: vscode_extensions | default([]) | length > 0
+  become: false
+  block:
+    - name: List Currently Installed Extensions
+      ansible.builtin.command:
+        cmd: >
+          code --list-extensions
+      register: vscode_installed_extensions
+      changed_when: false
+
+    - name: Install Missing Extensions
+      ansible.builtin.command:
+        cmd: >
+          code --install-extension {{ item }}
+      loop: "{{ vscode_pending_extensions }}"
+      vars:
+        vscode_extension_request: "{{ vscode_extensions | default([]) | map('lower') | list }}"
+        vscode_user_extensions: "{{ vscode_installed_extensions.stdout_lines | map('lower') | list }}"
+        vscode_pending_extensions: "{{ vscode_extension_request | difference(vscode_user_extensions) }}"
+      register: vscode_extension_installation_report
+      changed_when: "'successfully installed' in vscode_extension_installation_report.stdout"
+
+    - name: Update Extensions
+      ansible.builtin.command:
+        cmd: >
+          code --update-extensions
+      register: vscode_extension_update_report
+      changed_when: "'Updating' in vscode_extension_update_report.stdout"

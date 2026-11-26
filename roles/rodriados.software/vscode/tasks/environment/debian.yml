@@ -1,0 +1,21 @@
+---
+# Personal workspace setup automation.
+# @file Visual Studio Code installation for Debian-like Linux environments.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Add Visual Studio Code APT Repository
+  ansible.builtin.deb822_repository:
+    name: vscode
+    types: deb
+    suites: stable
+    components: main
+    uris: "{{ vscode_apt_repository_url }}"
+    signed_by: "{{ vscode_signing_key_url }}"
+    state: present
+
+- name: Install Visual Studio Code Package
+  ansible.builtin.apt:
+    name: code
+    state: present
+    update_cache: true

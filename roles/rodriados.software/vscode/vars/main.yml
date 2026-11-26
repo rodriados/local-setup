@@ -1,0 +1,9 @@
+---
+# Personal workspace setup automation.
+# @file Visual Studio Code installation role variables.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+vscode_signing_key_url: "https://packages.microsoft.com/keys/microsoft.asc"
+vscode_apt_repository_url: "https://packages.microsoft.com/repos/code"
+vscode_rpm_repository_url: "https://packages.microsoft.com/yumrepos/vscode"

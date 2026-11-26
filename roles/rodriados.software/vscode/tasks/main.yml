@@ -1,0 +1,37 @@
+---
+# Personal workspace setup automation.
+# @file The Visual Studio Code installation role tasks.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Install Visual Studio Code on Linux
+  when: ansible_facts.system == "Linux"
+  become: true
+  block:
+    - name: Install Visual Studio Code for Debian
+      ansible.builtin.include_tasks:
+        file: "environment/debian.yml"
+      when: ansible_facts.os_family == "Debian"
+
+    - name: Install Visual Studio Code for RedHat
+      ansible.builtin.include_tasks:
+        file: "environment/redhat.yml"
+      when: ansible_facts.os_family == "RedHat"
+
+- name: Install Visual Studio Code on MacOS
+  when: ansible_facts.system == "Darwin"
+  community.general.homebrew_cask:
+    name: visual-studio-code
+    state: present
+
+- name: Write Visual Studio Code Settings
+  ansible.builtin.include_tasks:
+    file: "install/settings.yml"
+  tags:
+    - settings
+    - keybindings
+
+- name: Install Visual Studio Code Extensions
+  ansible.builtin.include_tasks:
+    file: "install/extensions.yml"
+  tags: extensions

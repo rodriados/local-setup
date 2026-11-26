@@ -1,0 +1,5 @@
+{%- if vscode_user_settings is mapping -%}
+  {{ vscode_user_settings | to_nice_json }}
+{%- else -%}
+  {{ '{}' }}
+{%- endif -%}

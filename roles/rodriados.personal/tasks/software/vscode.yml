@@ -6,13 +6,9 @@
 
 - name: Install Visual Studio Code
   ansible.builtin.include_role:
-    name: gantsign.visual-studio-code
+    name: rodriados.software/vscode
   vars:
-    visual_studio_code_build: stable
-    visual_studio_code_gpgcheck: true
-    users:
-      - username: "{{ ansible_user_id }}"
-        visual_studio_code_extensions: "{{ vscode.extensions | default([]) }}"
-        visual_studio_code_settings: "{{ vscode.settings | default({}) }}"
-        visual_studio_code_keybindings: "{{ vscode.keybindings | default({}) }}"
+    vscode_extensions: "{{ vscode.extensions | default([], true) }}"
+    vscode_settings: "{{ vscode.settings | default({}, true) }}"
+    vscode_keybindings: "{{ vscode.keybindings | default([], true) }}"
   tags: vscode

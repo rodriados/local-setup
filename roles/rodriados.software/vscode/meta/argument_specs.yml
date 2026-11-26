@@ -1,0 +1,28 @@
+---
+# Personal workspace setup automation.
+# @file Visual Studio Code installation role argument specs.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+argument_specs:
+  main:
+    description:
+      - Install and configure Visual Studio Code in the system for all users
+      - Install extensions for Visual Studio Code for the current user
+    options:
+      vscode_extensions:
+        type: list
+        elements: str
+        required: false
+        default: []
+
+      vscode_settings:
+        type: dict
+        required: false
+        default: {}
+
+      vscode_keybindings:
+        type: list
+        elements: dict
+        required: false
+        default: []

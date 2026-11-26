@@ -1,0 +1,11 @@
+{%- set previous_signals = [] -%}
+{%- set vscode_user_keybindings = vscode_user_previous_keybindings | list -%}
+{%- for kb in vscode_user_previous_keybindings -%}
+  {%- set _ = previous_signals.append((kb.key | lower) ~ '|' ~ (kb.when | default(''))) -%}
+{%- endfor -%}
+{%- for kb in vscode_keybindings | default([]) -%}
+  {%- if ((kb.key | lower) ~ '|' ~ (kb.when | default(''))) not in previous_signals -%}
+    {%- set _ = vscode_user_keybindings.append(kb) -%}
+  {%- endif -%}
+{%- endfor -%}
+{{ vscode_user_keybindings | to_nice_json }}

@@ -1,0 +1,13 @@
+---
+# Personal workspace setup automation.
+# @file Visual Studio Code installation role defaults.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+vscode_extensions:
+  - editorconfig.editorconfig
+vscode_settings:
+  "files.insertFinalNewline": true
+  "files.trimFinalNewlines": true
+  "files.trimTrailingWhitespace": true
+vscode_keybindings: []

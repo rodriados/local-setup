@@ -1,0 +1,46 @@
+---
+# Personal workspace setup automation.
+# @file The Visual Studio Code settings writting tasks.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Write Visual Studio Code Settings
+  become: false
+  vars:
+    vscode_user_directory_by_system:
+      linux: "{{ ansible_facts.user_dir }}/.config/Code/User"
+      darwin: "{{ ansible_facts.user_dir }}/Library/Application Support/Code/User"
+    vscode_user_directory: "{{ vscode_user_directory_by_system[ansible_facts.system | lower] }}"
+  block:
+    - name: Ensure User Configuration Directory Exists
+      ansible.builtin.file:
+        path: "{{ vscode_user_directory }}"
+        state: directory
+        mode: "0755"
+
+    - name: Write Missing Visual Studio Code User Settings
+      ansible.builtin.template:
+        src: settings.json.j2
+        dest: "{{ vscode_user_settings_file }}"
+        mode: "0644"
+      vars:
+        vscode_user_settings_file: "{{ vscode_user_directory }}/settings.json"
+        vscode_user_settings_raw_contents: >-
+          {{ lookup('file', vscode_user_settings_file, errors='ignore') | trim | default('{}', true) }}
+        vscode_user_previous_settings: "{{ vscode_user_settings_raw_contents | from_json }}"
+        vscode_user_settings: "{{ vscode_settings | combine(vscode_user_previous_settings, recursive=True) }}"
+      when: vscode_settings | default({}) | length > 0
+      tags: settings
+
+    - name: Write Missing Visual Studio Code Key Bindings
+      ansible.builtin.template:
+        src: keybindings.json.j2
+        dest: "{{ vscode_user_keybindings_file }}"
+        mode: "0644"
+      vars:
+        vscode_user_keybindings_file: "{{ vscode_user_directory }}/keybindings.json"
+        vscode_user_keybindings_raw_contents: >-
+          {{ lookup('file', vscode_user_keybindings_file, errors='ignore') | trim | default('[]', true) }}
+        vscode_user_previous_keybindings: "{{ vscode_user_keybindings_raw_contents | from_json }}"
+      when: vscode_keybindings | default([]) | length > 0
+      tags: keybindings
