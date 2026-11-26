@@ -1,0 +1,16 @@
+---
+# Personal workspace setup automation.
+# @file Google Chrome installation for Debian-like Linux environments.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+# Install Google Chrome directly from the .deb package instead of pre-configuring
+# the APT repository. During first install, Chrome's post-install script automatically
+# creates the repository file and imports its signing key. Pre-configuring it beforehand
+# causes duplicate repository warnings or errors on subsequent `apt update` runs.
+
+- name: Install Google Chrome for Debian
+  ansible.builtin.apt:
+    deb: "{{ google_chrome_deb_url }}"
+    state: present
+    update_cache: true
