@@ -1,0 +1,9 @@
+---
+# Personal workspace setup automation.
+# @file The modules installation role variables.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+distrobox_container_registry_config_file: /etc/containers/registries.conf
+distrobox_user_config_file: "{{ ansible_user_home }}/.config/distrobox/distrobox.conf"
+distrobox_user_init_hook: "{{ ansible_user_home }}/.local/share/distrobox/init-hook.sh"

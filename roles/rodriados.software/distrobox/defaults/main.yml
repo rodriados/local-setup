@@ -1,0 +1,7 @@
+---
+# Personal workspace setup automation.
+# @file The modules installation role defaults.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+distrobox_default_image: "ubuntu:26.04"

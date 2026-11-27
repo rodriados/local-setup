@@ -1,0 +1,11 @@
+---
+# Personal workspace setup automation.
+# @file The tasks for installing Distrobox.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Install Distrobox
+  ansible.builtin.import_role:
+    name: rodriados.software/distrobox
+    allow_duplicates: false
+  tags: distrobox

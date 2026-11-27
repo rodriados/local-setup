@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+container_image_default="{{ distrobox_container_image_default }}"
+container_init_hook="{{ distrobox_module_init_hook }}"
+container_command_prefix="${DISTROBOX_ENTER_PATH:-"distrobox-enter"} ${rootful} -n ${container_name} ${enter_flags} --no-tty -- ${sudo_prefix} "
