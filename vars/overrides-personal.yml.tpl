@@ -27,10 +27,10 @@ dotfiles:
 extra_packages: []
 
 drivers:
+  - displaylink
   - nvidia
 
 softwares:
-  - displaylink
   - docker
   - google-chrome
   - postman

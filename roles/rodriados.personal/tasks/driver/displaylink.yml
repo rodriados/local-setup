@@ -1,6 +1,6 @@
 ---
 # Personal workspace setup automation.
-# @file The DisplayLink drivers installation role tasks.
+# @file The DisplayLink drivers installation tasks.
 # @author Rodrigo Siqueira <me@rodriados.com>
 # @copyright 2026-present Rodrigo Siqueira
 
@@ -21,11 +21,10 @@
       block:
         - name: Install DisplayLink Dependencies
           ansible.builtin.package:
-            name: "{{ item }}"
+            name: "{{ displaylink_dependencies }}"
             state: present
             update_cache: true
-          loop:
-            - "{{ displaylink_dependencies | default([]) }}"
+          when: "{{ displaylink_dependencies | default([]) | length > 0 }}"
 
         - name: Install DisplayLink APT Repository Package
           ansible.builtin.apt:

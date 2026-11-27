@@ -1,9 +1,0 @@
----
-# Personal workspace setup automation.
-# @file The tasks for installing DisplayLink drivers.
-# @author Rodrigo Siqueira <me@rodriados.com>
-# @copyright 2026-present Rodrigo Siqueira
-
-- name: Install DisplayLink Drivers
-  ansible.builtin.include_role:
-    name: rodriados.software/displaylink
