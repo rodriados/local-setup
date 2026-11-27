@@ -1,0 +1,13 @@
+---
+# Personal workspace setup automation.
+# @file The toolbox configuration role variables.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+toolbox_required_packages:
+  - fzf
+  - gawk
+  - git
+  - jq
+  - nano
+  - xdg-open

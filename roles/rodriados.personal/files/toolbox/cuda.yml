@@ -1,0 +1,27 @@
+name: cuda
+image: nvidia/cuda:12.9.2-devel-ubuntu24.04
+additional_packages:
+  - build-essential
+  - cmake
+  - ninja-build
+exported_bins:
+  - /usr/local/cuda-12.9/bin/nvcc
+  - /usr/local/cuda-12.9/bin/compute-sanitizer
+  - /usr/local/cuda-12.9/bin/cuda-gdb
+  - /usr/local/cuda-12.9/bin/cuda-gdb-minimal
+  - /usr/local/cuda-12.9/bin/cuda-gdb-python3.10-tui
+  - /usr/local/cuda-12.9/bin/cuda-gdb-python3.11-tui
+  - /usr/local/cuda-12.9/bin/cuda-gdb-python3.12-tui
+  - /usr/local/cuda-12.9/bin/cuda-gdb-python3.8-tui
+  - /usr/local/cuda-12.9/bin/cuda-gdb-python3.9-tui
+  - /usr/local/cuda-12.9/bin/cuda-gdbserver
+  - /usr/local/cuda-12.9/bin/cuobjdump
+  - /usr/local/cuda-12.9/bin/fatbinary
+  - /usr/local/cuda-12.9/bin/ncu
+  - /usr/local/cuda-12.9/bin/ncu-ui
+  - /usr/local/cuda-12.9/bin/nvdisasm
+  - /usr/local/cuda-12.9/bin/nvlink
+  - /usr/local/cuda-12.9/bin/nvprof
+  - /usr/local/cuda-12.9/bin/nvprune
+nvidia: true
+pull: false

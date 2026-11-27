@@ -1,0 +1,15 @@
+[{{ toolbox_config.name }}]
+start_now=true
+{%- for key, value in toolbox_config.items() %}
+{%- if key != 'name' and value is not none and value != '' and value != [] %}
+  {%- if value is boolean %}
+{{ key }}={{ value | lower }}
+  {%- elif value is sequence and value is not string %}
+    {%- for item in value %}
+{{ key }}="{{ item }}"
+    {%- endfor %}
+  {%- else %}
+{{ key }}="{{ value }}"
+  {%- endif %}
+{%- endif %}
+{%- endfor %}

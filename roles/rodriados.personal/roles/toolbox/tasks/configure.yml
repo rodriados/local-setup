@@ -1,0 +1,10 @@
+---
+# Personal workspace setup automation.
+# @file The personal profile toolboxes configuration tasks list.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Install Required Packages
+  ansible.builtin.package:
+    name: "{{ toolbox_required_packages }}"
+    state: present

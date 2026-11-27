@@ -8,32 +8,31 @@
   ansible.builtin.include_tasks:
     file: "driver/{{ item }}.yml"
     apply:
-      tags: "{{ item }}"
-  loop:
-    - nvidia
-  when:
-    - drivers is defined
-    - item in drivers
+      tags:
+        - "{{ item }}"
+        - drivers
+  loop: "{{ drivers | default([]) | unique }}"
   tags: always
 
 - name: Install Softwares
   ansible.builtin.include_tasks:
     file: "software/{{ item }}.yml"
     apply:
-      tags: "{{ item }}"
-  loop:
-    - displaylink
-    - docker
-    - google-chrome
-    - postman
-    - spotify
-    - vscode
-  when:
-    - softwares is defined
-    - item in softwares
+      tags:
+        - "{{ item }}"
+        - softwares
+  loop: "{{ softwares | default([]) | unique }}"
   tags: always
 
-- name: Install Modules
-  ansible.builtin.include_tasks:
-    file: "modules.yml"
-  tags: modules
+- name: Assemble Toolboxes
+  ansible.builtin.include_role:
+    name: rodriados.personal/roles/toolbox
+    apply:
+      tags:
+        - "{{ item }}"
+        - toolbox
+  vars:
+    toolbox_assemble_file: >
+      {{ lookup('first_found', 'toolbox/' ~ item ~ '.yml') }}
+  loop: "{{ toolboxes | default([]) | unique }}"
+  tags: always

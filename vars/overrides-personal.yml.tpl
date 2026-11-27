@@ -37,5 +37,5 @@ softwares:
   - spotify
   - vscode
 
-modules:
+toolboxes:
   - cuda

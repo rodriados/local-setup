@@ -1,0 +1,36 @@
+---
+# Personal workspace setup automation.
+# @file The personal profile toolboxes installation tasks list.
+# @author Rodrigo Siqueira <me@rodriados.com>
+# @copyright 2026-present Rodrigo Siqueira
+
+- name: Assemble Toolbox
+  when: toolbox_assemble_file is defined
+  vars:
+    toolbox_config: "{{ lookup('file', toolbox_assemble_file) | from_yaml }}"
+  block:
+    - name: Assemble Toolbox Container
+      ansible.builtin.command:
+        cmd: distrobox assemble create -v --file -
+        stdin: "{{ distrobox_assemble_file_contents }}"
+      vars:
+        distrobox_assemble_file_contents: "{{ lookup('template', 'toolbox-assemble.ini.j2') }}"
+      environment:
+        DBX_NON_INTERACTIVE: "1"
+      register:
+        distrobox_assemble_output: _task.result.stdout ~ _task.result.stderr
+        distrobox_container_created: "'successfully created' in distrobox_assemble_output | lower"
+        distrobox_container_connection: >-
+          'containers.podman.podman'
+            if 'podman' in distrobox_assemble_output
+            else 'community.docker.docker'
+      changed_when: distrobox_container_created
+
+    - name: Configure Toolbox Container
+      ansible.builtin.include_tasks:
+        file: configure.yml
+        apply:
+          delegate_to: "{{ toolbox_config.name }}"
+          vars:
+            ansible_connection: "{{ distrobox_container_connection }}"
+      when: distrobox_container_created
